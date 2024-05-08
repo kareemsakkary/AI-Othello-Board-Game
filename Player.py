@@ -1,11 +1,10 @@
 
 class Player():
-    def __init__(self, name, score):
+    def __init__(self, name, color):
         self.name = name
-        self.color = score
+        self.color = color
     
     # write abstract play_move() method here
-    @abstractmethod
     def play_move(self, valid_moves):
         pass
 

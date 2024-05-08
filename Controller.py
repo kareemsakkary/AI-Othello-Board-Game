@@ -7,6 +7,5 @@ class Controller():
         self.player1 = None
         self.player2 = None
     
-    @abstractmethod
     def play_game(self):
         pass
