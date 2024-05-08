@@ -55,14 +55,18 @@ class Board():
                     sy = y
                     while sx != nx or sy != ny:
                         if(player.color == "B"):
-                            countBlack += 1
-                            countWhite -= 1
+                            self.countBlack += 1
+                            self.countWhite -= 1
                         else:
-                            countWhite += 1
-                            countBlack -= 1
+                            self.countWhite += 1
+                            self.countBlack -= 1
                         self.boards[sx][sy].color = player.color
                         sx = sx + dx[k]
                         sy = sy + dy[k]
+                    if(player.color == "B"):
+                        self.countWhite += 1
+                    else:
+                        self.countBlack += 1
                     break
                 nx = nx + dx[k]
                 ny = ny + dy[k]
@@ -108,3 +112,5 @@ Board.print_board(li)
 make = Board.make_move(Player,li[1])
 li = Board.valid_moves(Player)
 Board.print_board(li)
+print(Board.countBlack)
+print(Board.countWhite)
