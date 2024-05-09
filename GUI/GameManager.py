@@ -8,8 +8,13 @@ from GUI.screens.GameBoardScreen import GameBoardScreen
 from GUI.Constants import SCREEN_WIDTH
 from GUI.Constants import SCREEN_HEIGHT
 
+from Board import Board
+from Human import Human
 
 def main():
+    game_board = Board()
+    player_one = Human("Hossam", "B")
+
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Smart Othello")

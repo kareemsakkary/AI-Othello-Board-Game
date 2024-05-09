@@ -103,14 +103,14 @@ class Board():
         self.countWhite = 2
 
 
-Board = Board()
-Player = Human.Human("kareem",'B')
-li = Board.valid_moves(Player)
-Board.print_board()
-Board.print_board(li)
-
-make = Board.make_move(Player,li[1])
-li = Board.valid_moves(Player)
-Board.print_board(li)
-print(Board.countBlack)
-print(Board.countWhite)
+# board = Board()
+# Player = Human.Human("kareem",'B')
+# li = board.valid_moves(Player)
+# board.print_board()
+# board.print_board(li)
+#
+# make = board.make_move(Player,li[1])
+# li = board.valid_moves(Player)
+# board.print_board(li)
+# print(board.countBlack)
+# print(board.countWhite)
