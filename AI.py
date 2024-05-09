@@ -1,8 +1,9 @@
-import Player
+from Player import Player
 
-class AI(Player.Player):
-    def __init__(self, name):
-        Player.__init__(self, name)
+
+class AI(Player):
+    def __init__(self, name, color):
+        super().__init__(name, color)
         self.name = name
 
     def play_move(self, valid_moves):
