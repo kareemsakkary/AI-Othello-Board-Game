@@ -5,5 +5,5 @@ class AI(Player.Player):
         Player.__init__(self, name)
         self.name = name
 
-    def play_move(self, valid_moves):
+    def play_move(self, board, valid_moves):
         pass

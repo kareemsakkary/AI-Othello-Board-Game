@@ -5,7 +5,7 @@ class Player():
         self.color = color
     
     # write abstract play_move() method here
-    def play_move(self, valid_moves):
+    def play_move(self, board, valid_moves):
         pass
 
     def get_name(self):
