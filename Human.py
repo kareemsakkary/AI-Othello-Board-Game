@@ -7,9 +7,8 @@ class Human(Player.Player):
         self.name = name
         self.color = color
 
-    def play_move(self, board, valid_moves):
-        board.print_board(valid_moves)
-        print("Enter your next move: ", end="")
+    def play_move(self, valid_moves):
+        print("Enter your next move: ")
         x = int(input("Enter row: "))
         y = int(input("Enter column: "))
         cell = Cell(x, y, self.color)
@@ -18,8 +17,7 @@ class Human(Player.Player):
             x = int(input("Enter row: "))
             y = int(input("Enter column: "))
             cell = Cell(x, y, self.color)
-        make = board.make_move(self, cell)
-        return make
+        return cell
         
 
-# player1 = Human("Nour", 'W')
+player1 = Human("Nour", 'W')
