@@ -1,12 +1,13 @@
 import pygame
 
-import GUI.Constants
 from GUI.screens.GameModeScreen import GameModeScreen
 from GUI.screens.MainMenuScreen import MainMenuScreen
 from GUI.screens.SettingsScreen import SettingsScreen
+from GUI.screens.GameBoardScreen import GameBoardScreen
 
 from GUI.Constants import SCREEN_WIDTH
 from GUI.Constants import SCREEN_HEIGHT
+
 
 def main():
     pygame.init()
@@ -30,6 +31,9 @@ def main():
 
         if screen_result == "Settings":
             current_screen = SettingsScreen(screen)
+
+        if screen_result == "GameBoard":
+            current_screen = GameBoardScreen(screen)
 
         # Rendering for the current screen
         current_screen.render()

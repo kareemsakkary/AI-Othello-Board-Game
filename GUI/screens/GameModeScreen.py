@@ -15,6 +15,7 @@ class GameModeScreen:
         self.background_image = pygame.transform.scale(self.background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
         self.back_button = BackToMainMenuButton(screen)
         self.click_sound = pygame.mixer.Sound("assets/audio/button_click.mp3")
+        self.game_start_sound = pygame.mixer.Sound("assets/audio/board_start.mp3")
         # Load the font for the title
         self.title_font = pygame.font.Font(None, 64)
 
@@ -54,11 +55,15 @@ class GameModeScreen:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 if self.human_button.is_clicked(mouse_pos):
-                    print("Human button clicked")
-                    # Add functionality for human button
+                    if GUI.Constants.SOUND:
+                        self.game_start_sound.play()
+                    GUI.Constants.GAME_MODE = 1
+                    return "GameBoard"
                 elif self.ai_button.is_clicked(mouse_pos):
-                    print("AI button clicked")
-                    # Add functionality for AI button
+                    if GUI.Constants.SOUND:
+                        self.game_start_sound.play()
+                    GUI.Constants.GAME_MODE = 2
+                    return "GameBoard"
                 elif self.back_button.is_clicked(mouse_pos):
                     if GUI.Constants.SOUND:
                         self.click_sound.play()
@@ -90,7 +95,7 @@ class SquareButton:
 class BackToMainMenuButton:
     def __init__(self, screen):
         self.screen = screen
-        self.rect = pygame.Rect(10, SCREEN_HEIGHT - 60, 220, 50)  # Increased width to accommodate the arrow
+        self.rect = pygame.Rect(10, SCREEN_HEIGHT - 60, 220, 50)
         self.default_button_color = (0, 255, 0)
         self.hover_button_color = (0, 200, 0)
         self.font = pygame.font.Font(None, 24)

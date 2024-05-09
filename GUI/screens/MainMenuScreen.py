@@ -96,31 +96,3 @@ class MainMenuScreen:
                     pygame.quit()
                     sys.exit()
         return None
-
-
-# Main function to run the game
-# def main():
-#     pygame.init()
-#     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-#     pygame.display.set_caption("Main Menu Example")
-#
-#     clock = pygame.time.Clock()
-#
-#     main_menu_screen = MainMenuScreen(screen)
-#
-#     # Main game loop
-#     while True:
-#         events = pygame.event.get()
-#
-#         # Event handling for the main menu screen
-#         main_menu_screen.handle_events(events)
-#
-#         # Rendering for the main menu screen
-#         main_menu_screen.render()
-#
-#         # Limit frame rate
-#         clock.tick(60)
-#
-#
-# if __name__ == "__main__":
-#     main()

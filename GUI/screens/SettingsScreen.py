@@ -4,6 +4,7 @@ import sys
 import GUI.Constants
 from GUI.screens.GameModeScreen import BackToMainMenuButton
 from GUI.Constants import BLACK
+from GUI.Constants import WHITE
 from GUI.Constants import SCREEN_HEIGHT
 from GUI.Constants import SCREEN_WIDTH
 
@@ -24,6 +25,7 @@ class SettingsScreen:
         self.difficulty_title_text = self.title_font.render("Game Difficulty", True, BLACK)
         self.difficulty_title_rect = self.difficulty_title_text.get_rect(center=(SCREEN_WIDTH // 2, 300))
         self.difficulty_option = RadioOption(screen, 100, 400, ["Easy", "Medium", "Hard"])
+        self.difficulty_option.selected_index = GUI.Constants.DIFFICULTY - 1
 
         self.back_button = BackToMainMenuButton(screen)
 
@@ -86,11 +88,11 @@ class ToggleOption:
         self.font = pygame.font.Font(None, 36)
 
     def render(self):
-        text_surface = self.font.render(self.name + ": " + self.options[self.current_option_index], True, BLACK)
+        text_surface = self.font.render(self.name + ": " + self.options[self.current_option_index], True, WHITE)
         self.screen.blit(text_surface, (self.x, self.y))
 
     def is_clicked(self, pos):
-        text_rect = self.font.render(self.name + ": " + self.options[self.current_option_index], True, BLACK).get_rect(topleft=(self.x, self.y))
+        text_rect = self.font.render(self.name + ": " + self.options[self.current_option_index], True, WHITE).get_rect(topleft=(self.x, self.y))
         return text_rect.collidepoint(pos)
 
     def toggle(self):
@@ -108,7 +110,7 @@ class RadioOption:
 
     def render(self):
         for i, option in enumerate(self.options):
-            text_surface = self.font.render(option, True, (0, 255, 255))
+            text_surface = self.font.render(option, True, WHITE)
             text_rect = text_surface.get_rect(topleft=(self.x + 50, self.y + i * 40))
             self.screen.blit(text_surface, text_rect)
             pygame.draw.circle(self.screen, (255, 255, 255), (self.x + 10, self.y + i * 40 + 12), 10, 2)
