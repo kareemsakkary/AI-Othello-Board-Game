@@ -1,32 +1,33 @@
 from Player import Player
 import copy
+
+
 class AI(Player):
     def __init__(self, name, color, difficulty):
-        super().__init__(name, color )
-        self.name = name
+        super().__init__(name, color)
         self.difficulty = difficulty
 
-    def evaluate(self, tempBoard):
-        if(self.color == "B"):
-            return [tempBoard.countBlack - tempBoard.countWhite, None]
+    def evaluate(self, temp_board):
+        if self.color == "B":
+            return [temp_board.countBlack - temp_board.countWhite, None]
         else:
-            return [tempBoard.countWhite - tempBoard.countBlack, None]
+            return [temp_board.countWhite - temp_board.countBlack, None]
     
-    def alphabeta(self,tempBoard, depth, alpha, beta, is_maximizing):
-        if tempBoard.game_over():
-            return self.evaluate(tempBoard)
+    def alphabeta(self, temp_board, depth, alpha, beta, is_maximizing):
+        if temp_board.game_over:
+            return self.evaluate(temp_board)
 
         if depth == 0:
-            return self.evaluate(tempBoard)
+            return self.evaluate(temp_board)
 
         if is_maximizing:
             best_score = float('-inf')
             best_move = None
-            for move in tempBoard.valid_moves(Player("dummy",self.color)):
-                temp = copy.deepcopy(tempBoard)
-                tempBoard.make_move(Player("dummy",self.color), move) # update max player with this move
-                score = self.alphabeta(tempBoard, depth - 1, alpha, beta, False)[0]
-                tempBoard = temp # undo move
+            for move in temp_board.valid_moves(Player("dummy", self.color)):
+                temp = copy.deepcopy(temp_board)
+                temp_board.make_move(Player("dummy", self.color), move)  # update max player with this move
+                score = self.alphabeta(temp_board, depth - 1, alpha, beta, False)[0]
+                temp_board = temp  # undo move
                 if score > best_score:
                     best_score = score
                     best_move = move
@@ -38,12 +39,12 @@ class AI(Player):
         else:
             best_score = float('inf')
             best_move = None
-            for move in tempBoard.valid_moves(Player("dummy", 'W' if self.color == 'B' else 'B')):
+            for move in temp_board.valid_moves(Player("dummy", 'W' if self.color == 'B' else 'B')):
               
-                temp = copy.deepcopy(tempBoard)
-                tempBoard.make_move(Player("dummy", 'W' if self.color == 'B' else 'B'),move)  # update min player with this move
-                score = self.alphabeta(tempBoard, depth - 1, alpha, beta, True)[0] #undo move
-                tempBoard = temp
+                temp = copy.deepcopy(temp_board)
+                temp_board.make_move(Player("dummy", 'W' if self.color == 'B' else 'B'), move)  # update min player with this move
+                score = self.alphabeta(temp_board, depth - 1, alpha, beta, True)[0]  # undo move
+                temp_board = temp
                 if score < best_score:
                     best_score = score
                     best_move = move
@@ -51,14 +52,8 @@ class AI(Player):
                 if beta <= alpha:
                     break
             return [best_score, best_move]
-    
-   
-    def play_move(self , board):
+
+    def play_move(self, board):
         print("AI is thinking...")
-        depth = 1
-        if(self.difficulty == "normal"):
-            depth = 3
-        elif(self.difficulty == "hard"):
-            depth = 5
-        best_move = self.alphabeta(board, depth, float('-inf'), float('inf'), True)[1]
+        best_move = self.alphabeta(board, self.difficulty, float('-inf'), float('inf'), True)[1]
         return best_move

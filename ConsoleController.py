@@ -3,7 +3,7 @@ import AI
 import Human
 
 
-class ConsoleController(Controller):
+class ConsoleController(Controller.Controller):
     def __init__(self):
         super().__init__()
 
@@ -110,6 +110,5 @@ class ConsoleController(Controller):
             self.display_ui(self.player2)
             valid_moves = self.board.valid_moves(self.player2)
             self.board.make_move(self.player2, self.player2.play_move(valid_moves))
-
         # display final score
         self.display_final_score()
