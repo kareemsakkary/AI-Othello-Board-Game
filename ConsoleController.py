@@ -48,7 +48,6 @@ class ConsoleController(Controller.Controller):
             print("It's a tie!")
         print("Thanks for playing :)")
 
-    # add as abstract method to base class for gui?
     def check_moves_left(self):
         # check if there are any valid moves left for both players
         if len(self.board.valid_moves(self.player1)) == 0 and len(self.board.valid_moves(self.player2)) == 0:
@@ -67,13 +66,10 @@ class ConsoleController(Controller.Controller):
         while not valid_input:
             difficulty_choice = input(">> ")
             if difficulty_choice == "1":
-                valid_input = True
                 return 1
             elif difficulty_choice == "2":
-                valid_input = True
                 return 3
             elif difficulty_choice == "3":
-                valid_input = True
                 return 5
             else:
                 print("Invalid difficulty choice. Please choose Easy, Medium or Hard only.")
@@ -117,4 +113,3 @@ class ConsoleController(Controller.Controller):
 
         # display final score
         self.display_final_score()
-
