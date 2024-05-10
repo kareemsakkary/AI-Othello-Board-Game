@@ -6,5 +6,5 @@ class AI(Player):
         super().__init__(name, color)
         self.name = name
 
-    def play_move(self, valid_moves):
+    def play_move(self, board, valid_moves):
         pass

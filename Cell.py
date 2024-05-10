@@ -1,4 +1,4 @@
-class cell():
+class Cell():
     def __init__(self, x, y, color):
         self.x = x
         self.y = y
