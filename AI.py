@@ -1,9 +1,9 @@
 import Player
 
+
 class AI(Player.Player):
-    def __init__(self, name):
-        Player.__init__(self, name)
-        self.name = name
+    def __init__(self, name, color):
+        super().__init__(name, color)
 
     def play_move(self, valid_moves):
-        pass
+        return valid_moves[0]
