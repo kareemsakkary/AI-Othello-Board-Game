@@ -1,9 +1,9 @@
-import Board
-import Player
+from Board import Board
+from Player import Player
 
 class Controller():
     def __init__(self):
-        self.board = Board.Board()
+        self.board = Board()
         self.player1 = None
         self.player2 = None
     

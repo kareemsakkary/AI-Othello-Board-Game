@@ -1,5 +1,5 @@
 from Cell import Cell
-import Human
+from Human import Human
 dx = [1, -1 , 0 , 0]
 dy = [0,  0,  1, -1]
 class Board():
@@ -103,8 +103,8 @@ class Board():
         self.countWhite = 2
     
     def game_over(self):
-        validBlack = self.valid_moves(Human.Human("dummy", "B"))
-        validWhite = self.valid_moves(Human.Human("dummy", "W"))
+        validBlack = self.valid_moves(Human("dummy", "B"))
+        validWhite = self.valid_moves(Human("dummy", "W"))
         if len(validBlack) == 0 and len(validWhite) == 0:
             if self.countBlack > self.countWhite:
                 return "B"

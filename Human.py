@@ -1,9 +1,9 @@
-import Player
+from Player import Player
 from Cell import Cell
 
-class Human(Player.Player):
+class Human(Player):
     def __init__(self, name, color):
-        Player.__init__( name, color)
+        __init__( name, color)
         self.name = name
         self.color = color
 
