@@ -18,6 +18,3 @@ class Human(Player.Player):
             y = int(input("Enter column: "))
             cell = Cell.Cell(x, y, self.color)
         return cell
-
-
-player1 = Human("Nour", 'W')
