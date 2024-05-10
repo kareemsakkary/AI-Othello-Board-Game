@@ -33,12 +33,12 @@ class Board:
                         ny = y + dy[k]
                         found_opponent = False
                         while self.valid(nx,ny) and self.board[nx][ny].color != player.color:
-                            if self.board[nx][ny].color == "E" and found_opponent:
-                                if not added.get(self.board[nx][ny]):
+                            if self.board[nx][ny].color == "E":
+                                if not added.get(self.board[nx][ny]) and found_opponent:
                                     valid_moves.append(self.board[nx][ny])
                                     added[self.board[nx][ny]] = True
                                 break
-                            elif self.board[nx][ny].color != "E":
+                            else:
                                 found_opponent = True
                             nx = nx + dx[k]
                             ny = ny + dy[k]   
