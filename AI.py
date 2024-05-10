@@ -39,7 +39,7 @@ class AI(Player):
                 if score > best_score:
                     best_score = score
                     best_move = move
-                alpha = max(alpha, score)
+                alpha = max(alpha, best_score)
                 if beta <= alpha:
                     break
             return [best_score, best_move]
@@ -55,7 +55,7 @@ class AI(Player):
                 if score < best_score:
                     best_score = score
                     best_move = move
-                beta = min(beta, score)
+                beta = min(beta, best_score)
                 if beta <= alpha:
                     break
             return [best_score, best_move]
