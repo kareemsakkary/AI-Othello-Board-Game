@@ -21,7 +21,39 @@ class Board:
 
     def valid(self, x, y):
         return 0 <= x < 8 and 0 <= y < 8
-    
+
+    def is_corner(self, x, y):
+        # check if the given cell is a corner
+        return (x, y) in [(0, 0), (0, 7), (7, 0), (7, 7)]
+
+    def is_border(self, x, y):
+        # check if the given cell is on the border of the board
+        return (x == 0 or x == 7 or y == 0 or y == 7) and not self.is_corner(x, y)
+
+    def can_outflank(self, player, cell):
+        x = cell.x
+        y = cell.y
+        # check if empty cell
+        if self.board[x][y].color != "E":
+            return False
+        for x in range(8):
+            for y in range(8):
+                if self.board[x][y].color == player.color:
+                    for k in range(4):
+                        nx = x + dx[k]
+                        ny = y + dy[k]
+                        found_opponent = False
+                        while self.valid(nx, ny) and self.board[nx][ny].color != player.color:
+                            if self.board[nx][ny].color == "E":
+                                if nx == x and ny == y and found_opponent:
+                                    return True
+                                break
+                            else:
+                                found_opponent = True
+                            nx = nx + dx[k]
+                            ny = ny + dy[k]
+        return False
+
     def valid_moves(self, player):
         valid_moves = []
         added = {}
@@ -32,7 +64,7 @@ class Board:
                         nx = x + dx[k]
                         ny = y + dy[k]
                         found_opponent = False
-                        while self.valid(nx,ny) and self.board[nx][ny].color != player.color:
+                        while self.valid(nx, ny) and self.board[nx][ny].color != player.color:
                             if self.board[nx][ny].color == "E":
                                 if not added.get(self.board[nx][ny]) and found_opponent:
                                     valid_moves.append(self.board[nx][ny])
@@ -41,7 +73,7 @@ class Board:
                             else:
                                 found_opponent = True
                             nx = nx + dx[k]
-                            ny = ny + dy[k]   
+                            ny = ny + dy[k]
         return valid_moves
 
     def make_move(self, player, cell):
@@ -73,7 +105,17 @@ class Board:
                 nx = nx + dx[k]
                 ny = ny + dy[k]
         return self.board
-    
+
+    def undo_move(self, player, cell):
+        x = cell.x
+        y = cell.y
+        self.board[x][y].color = "E"
+
+        if player.color == "B":
+            self.countBlack -= 1
+        else:
+            self.countWhite -= 1
+
     def print_board(self, valid_moves=None):
         if valid_moves is None:
             valid_moves = []
@@ -107,15 +149,10 @@ class Board:
         self.countWhite = 2
     
     def game_over(self):
-        validBlack = self.valid_moves(Human("dummy", "B"))
-        validWhite = self.valid_moves(Human("dummy", "W"))
-        if len(validBlack) == 0 and len(validWhite) == 0:
-            if self.countBlack > self.countWhite:
-                return "B"
-            elif self.countBlack < self.countWhite:
-                return "W"
-            else:
-                return "D"
+        valid_black = self.valid_moves(Human("dummy", "B"))
+        valid_white = self.valid_moves(Human("dummy", "W"))
+        if len(valid_black) == 0 and len(valid_white) == 0:
+            return True
         return False
 
 # board = Board()
