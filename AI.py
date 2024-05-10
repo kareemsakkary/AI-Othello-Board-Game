@@ -45,8 +45,10 @@ class AI(Player):
             best_score = float('-inf')
             best_move = None
             for move in temp_board.valid_moves(Human("dummy", self.color)):
+                temp = temp_board
                 temp_board.make_move(Human("dummy", self.color), move)  # update max player with this move
                 score = self.alphabeta(temp_board, depth - 1, alpha, beta, False)[0]
+                temp_board = temp  # undo move
                 if score > best_score:
                     best_score = score
                     best_move = move
@@ -59,8 +61,10 @@ class AI(Player):
             best_score = float('inf')
             best_move = None
             for move in temp_board.valid_moves(Human("dummy", 'W' if self.color == 'B' else 'B')):
+                temp = temp_board
                 temp_board.make_move(Human("dummy", 'W' if self.color == 'B' else 'B'), move)  # update min player with this move
                 score = self.alphabeta(temp_board, depth - 1, alpha, beta, True)[0]  # undo move
+                temp_board = temp  # undo move
                 if score < best_score:
                     best_score = score
                     best_move = move
