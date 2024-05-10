@@ -98,7 +98,7 @@ class Board:
         for i in range(8):
             self.board.append([])
             for j in range(8):
-                self.board[i].append(Cell.Cell(i, j, "E"))
+                self.board[i].append(Cell(i, j, "E"))
         self.board[3][3].color = "W"
         self.board[3][4].color = "B"
         self.board[4][3].color = "B"
