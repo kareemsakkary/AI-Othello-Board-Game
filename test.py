@@ -1,13 +1,13 @@
 import Board
 import Human
-
+import AI
+import copy
 board = Board.Board()
-player = Human.Human("Nour", 'B')
+player = AI.AI("Nour", 'B', "easy")
 
 board.print_board()
-validMoves = board.valid_moves(player)
-board.print_board(validMoves)
-cell = player.play_move(validMoves)
+tempBoard = copy.deepcopy(board)
+cell = player.play_move(tempBoard)
 move = board.make_move(player, cell)
 board.print_board()
 

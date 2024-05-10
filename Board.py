@@ -1,4 +1,4 @@
-import Cell
+from Cell import Cell
 import Human
 dx = [1, -1 , 0 , 0]
 dy = [0,  0,  1, -1]
@@ -8,7 +8,7 @@ class Board():
         for i in range(8):
             self.boards.append([])
             for j in range(8):
-                self.boards[i].append(Cell.Cell(i, j, "E"))
+                self.boards[i].append(Cell(i, j, "E"))
         self.boards[3][3].color = "W"
         self.boards[3][4].color = "B"
         self.boards[4][3].color = "B"
@@ -94,7 +94,7 @@ class Board():
         for i in range(8):
             self.boards.append([])
             for j in range(8):
-                self.boards[i].append(Cell.Cell(i, j, "E"))
+                self.boards[i].append(Cell(i, j, "E"))
         self.boards[3][3].color = "W"
         self.boards[3][4].color = "B"
         self.boards[4][3].color = "B"
