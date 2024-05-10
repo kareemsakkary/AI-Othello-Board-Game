@@ -101,7 +101,18 @@ class Board():
         self.boards[4][4].color = "W"
         self.countBlack = 2
         self.countWhite = 2
-
+    
+    def game_over(self):
+        validBlack = self.valid_moves(Human.Human("dummy", "B"))
+        validWhite = self.valid_moves(Human.Human("dummy", "W"))
+        if len(validBlack) == 0 and len(validWhite) == 0:
+            if self.countBlack > self.countWhite:
+                return "B"
+            elif self.countBlack < self.countWhite:
+                return "W"
+            else:
+                return "D"
+        return False
 
 # board = Board()
 # Player = Human.Human("kareem",'B')
