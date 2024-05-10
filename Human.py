@@ -3,8 +3,8 @@ from Cell import Cell
 
 class Human(Player):
     def __init__(self, name, color):
-        __init__( name, color)
-        self.name = name
+        Player.__init__( name, color)
+        self.name = name.capitalize()
         self.color = color
 
     def play_move(self, board):

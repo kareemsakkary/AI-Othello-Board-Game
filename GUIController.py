@@ -1,29 +1,21 @@
-from abc import ABC, abstractmethod
-import Board
+import Controller
 
 
-class Controller(ABC):
+class GUIController(Controller.Controller):
     def __init__(self):
-        self.board = Board()
-        self.player1 = None
-        self.player2 = None
+        super().__init__()
 
-    @abstractmethod
     def display_ui(self, player=None):
         pass
 
-    @abstractmethod
     def display_final_score(self):
         pass
 
-    @abstractmethod
     def initialize_players(self):
         pass
 
-    @abstractmethod
     def choose_difficulty(self):
         pass
 
-    @abstractmethod
     def play_game(self):
         pass
