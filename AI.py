@@ -11,20 +11,22 @@ class AI(Player):
     def evaluate(self, temp_board):
         valid_moves = temp_board.valid_moves(self)
         # 1 point for player's current cell color
-        # 5 points for a valid move
+        # 5 points if number of valid moves greater than opponent
         # 10 points if a valid move is on the edge/border of the board
         # 15 points if a valid move is a corner
-        # 20 points if a cell of my color can't be outflanked by the opponent
+        # 20 points if a valid move can't be outflanked by the opponent
 
         val = 0
         # add 1 for each cell player's color and minus the opponent color cells
         if self.color == "B":
             val += temp_board.countBlack - temp_board.countWhite
+            opponent_valid_moves = temp_board.valid_moves(Human("dummy", "W"))
         else:
             val += temp_board.countWhite - temp_board.countBlack
+            opponent_valid_moves = temp_board.valid_moves(Human("dummy", "B"))
 
-        # Add 5 points for the number of valid moves
-        val += 5 * len(valid_moves)
+        # Add 5 points for greater number of valid moves
+        val += 5 if len(valid_moves) > len(opponent_valid_moves) else -5
 
         # loop on valid moves and check it is a corner or on edge and can be outflanked
         for move in valid_moves:
