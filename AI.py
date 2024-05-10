@@ -1,5 +1,6 @@
 from Player import Player
 import copy
+from Cell import Cell
 
 
 class AI(Player):
@@ -40,7 +41,6 @@ class AI(Player):
             best_score = float('inf')
             best_move = None
             for move in temp_board.valid_moves(Player("dummy", 'W' if self.color == 'B' else 'B')):
-              
                 temp = copy.deepcopy(temp_board)
                 temp_board.make_move(Player("dummy", 'W' if self.color == 'B' else 'B'), move)  # update min player with this move
                 score = self.alphabeta(temp_board, depth - 1, alpha, beta, True)[0]  # undo move
@@ -56,4 +56,5 @@ class AI(Player):
     def play_move(self, board):
         print("AI is thinking...")
         best_move = self.alphabeta(board, self.difficulty, float('-inf'), float('inf'), True)[1]
+        # cell = Cell(best_move[1].x, best_move[1].y, self.color)
         return best_move

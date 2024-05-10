@@ -14,8 +14,5 @@ class GUIController(Controller.Controller):
     def initialize_players(self):
         pass
 
-    def choose_difficulty(self):
-        pass
-
     def play_game(self):
         pass

@@ -7,5 +7,5 @@ class Player(ABC):
         self.color = color
     
     @abstractmethod
-    def play_move(self, valid_moves):
+    def play_move(self, board):
         pass

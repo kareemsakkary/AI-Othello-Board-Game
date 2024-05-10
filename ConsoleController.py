@@ -104,11 +104,9 @@ class ConsoleController(Controller.Controller):
         while self.check_moves_left():
             # player 1 turn
             self.display_ui(self.player1)
-            valid_moves = self.board.valid_moves(self.player1)
-            self.board.make_move(self.player1, self.player1.play_move(valid_moves))
+            self.board.make_move(self.player1, self.player1.play_move(self.board))
             # player 2 turn
             self.display_ui(self.player2)
-            valid_moves = self.board.valid_moves(self.player2)
-            self.board.make_move(self.player2, self.player2.play_move(valid_moves))
+            self.board.make_move(self.player2, self.player2.play_move(self.board))
         # display final score
         self.display_final_score()
