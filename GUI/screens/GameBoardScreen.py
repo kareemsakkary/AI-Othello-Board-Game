@@ -2,7 +2,10 @@ import pygame
 import sys
 
 import GUI.Constants
-from GUI.Constants import SCREEN_WIDTH, WHITE, BLACK, SCREEN_HEIGHT
+from AI import AI
+from GUI.Constants import SCREEN_WIDTH, WHITE, BLACK, SCREEN_HEIGHT, GAME_MODE, SOUND
+from Human import Human
+
 
 class Button:
     def __init__(self, screen, x, y, width, height, text):
@@ -30,8 +33,11 @@ class Button:
 
 
 class GameBoardScreen:
-    def __init__(self, screen):
+    def __init__(self, screen, board, player_one, player_two):
         self.screen = screen
+        self.board = board
+        self.player_one = player_one
+        self.player_two = player_two
         self.board_size = 8
         self.square_size = 50  # Size of each square in pixels
         self.board_width = self.board_size * self.square_size
@@ -39,7 +45,18 @@ class GameBoardScreen:
         self.sidebar_width = 200
         self.button_height = 50
         self.click_sound = pygame.mixer.Sound("assets/audio/button_click.mp3")
-        self.enemy = "assets/images/man.png" if GUI.Constants.GAME_MODE == 1 else "assets/images/ai.png"
+        self.enemy = ""
+
+        if GUI.Constants.GAME_MODE == 1:
+            self.player_two = Human("Enemy", "W")
+            self.enemy = "assets/images/man.png"
+            print(GUI.Constants.GAME_MODE)
+        else:
+            self.player_two = AI("Enemy", "W")
+            self.enemy = "assets/images/ai.png"
+
+        self.current_player = 1
+        self.board.reset()
 
         # Load and resize images for sidebar
         self.sidebar_top_image = pygame.image.load("assets/images/man.png").convert_alpha()
@@ -50,17 +67,6 @@ class GameBoardScreen:
         # Create button
         self.leave_button = Button(screen, (SCREEN_WIDTH - self.sidebar_width) // 2, SCREEN_HEIGHT - self.button_height - 20,
                                    self.sidebar_width, self.button_height, "Leave")
-
-        # Initialize game pieces
-        self.game_pieces = [[0] * self.board_size for _ in range(self.board_size)]
-        self.game_pieces[3][3] = 1  # White piece
-        self.game_pieces[3][4] = -1  # Black piece
-        self.game_pieces[4][3] = -1  # Black piece
-        self.game_pieces[4][4] = 1  # White piece
-
-        # Initialize chip counts
-        self.black_chips_count = 2
-        self.white_chips_count = 2
 
     def render(self):
         # Load and scale background image
@@ -91,9 +97,9 @@ class GameBoardScreen:
                 pygame.draw.rect(self.screen, (0, 128, 0), rect)
                 pygame.draw.rect(self.screen, BLACK, rect, 1)  # Draw black border around each cell
 
-                if self.game_pieces[row][col] == 1:  # White piece
+                if self.board.boards[row][col].color == "W":  # White piece
                     pygame.draw.circle(self.screen, WHITE, rect.center, self.square_size // 2 - 5)
-                elif self.game_pieces[row][col] == -1:  # Black piece
+                elif self.board.boards[row][col].color == "B":  # Black piece
                     pygame.draw.circle(self.screen, BLACK, rect.center, self.square_size // 2 - 5)
 
     def draw_sidebar(self):
@@ -107,7 +113,7 @@ class GameBoardScreen:
         pygame.draw.circle(self.screen, BLACK, (SCREEN_WIDTH - self.sidebar_width + 20, 200), 20)
 
         # Draw black chip count
-        black_chip_text = self.leave_button.font.render(str(self.black_chips_count), True, BLACK)
+        black_chip_text = self.leave_button.font.render(str(self.board.countBlack), True, BLACK)
         black_chip_rect = black_chip_text.get_rect(topright=(SCREEN_WIDTH - self.sidebar_width + 80, 192))
         self.screen.blit(black_chip_text, black_chip_rect)
 
@@ -115,7 +121,7 @@ class GameBoardScreen:
         pygame.draw.circle(self.screen, WHITE, (SCREEN_WIDTH - self.sidebar_width + 20, 350), 20)
 
         # Draw black chip count
-        black_chip_text = self.leave_button.font.render(str(self.black_chips_count), True, WHITE)
+        black_chip_text = self.leave_button.font.render(str(self.board.countWhite), True, WHITE)
         black_chip_rect = black_chip_text.get_rect(topright=(SCREEN_WIDTH - self.sidebar_width + 80, 340))
         self.screen.blit(black_chip_text, black_chip_rect)
 
@@ -130,6 +136,6 @@ class GameBoardScreen:
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if self.leave_button.is_hovered:
-                    if GUI.Constants.SOUND:
+                    if SOUND:
                         self.click_sound.play()
                     return "GameMode"

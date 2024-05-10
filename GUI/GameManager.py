@@ -14,6 +14,7 @@ from Human import Human
 def main():
     game_board = Board()
     player_one = Human("Hossam", "B")
+    player_two = None
 
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -38,7 +39,7 @@ def main():
             current_screen = SettingsScreen(screen)
 
         if screen_result == "GameBoard":
-            current_screen = GameBoardScreen(screen)
+            current_screen = GameBoardScreen(screen, game_board, player_one, player_two)
 
         # Rendering for the current screen
         current_screen.render()
