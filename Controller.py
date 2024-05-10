@@ -21,5 +21,9 @@ class Controller(ABC):
         pass
 
     @abstractmethod
+    def choose_difficulty(self):
+        pass
+
+    @abstractmethod
     def play_game(self):
         pass

@@ -58,6 +58,26 @@ class ConsoleController(Controller.Controller):
             return False
         return True
 
+    def choose_difficulty(self):
+        valid_input = False
+        print("Please choose the AI difficulty level:")
+        print("1. Easy")
+        print("2. Medium")
+        print("3. Hard")
+        while not valid_input:
+            difficulty_choice = input(">> ")
+            if difficulty_choice == "1":
+                valid_input = True
+                return 1
+            elif difficulty_choice == "2":
+                valid_input = True
+                return 3
+            elif difficulty_choice == "3":
+                valid_input = True
+                return 5
+            else:
+                print("Invalid difficulty choice. Please choose Easy, Medium or Hard only.")
+
     def initialize_players(self):
         print("Please enter your name:")
         name = input(">> ")
@@ -70,10 +90,10 @@ class ConsoleController(Controller.Controller):
             # Player 1 is always black and moves first
             if color_choice == "1":
                 self.player1 = Human.Human(name, 'B')
-                self.player2 = AI.AI("AI", 'W')
+                self.player2 = AI.AI("AI", 'W', self.choose_difficulty())
                 valid_input = True
             elif color_choice == "2":
-                self.player1 = AI.AI("AI", 'B')
+                self.player1 = AI.AI("AI", 'B', self.choose_difficulty())
                 self.player2 = Human.Human(name, 'W')
                 valid_input = True
             else:
