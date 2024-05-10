@@ -1,7 +1,6 @@
 import Controller
 import AI
 import Human
-import copy
 
 
 class ConsoleController(Controller.Controller):
@@ -30,10 +29,12 @@ class ConsoleController(Controller.Controller):
             self.board.print_board(valid_moves)
 
     def display_final_score(self):
+        # print final board state
         self.board.print_board()
+        # print game over message
         print("****** Game Over ******")
         print("Final Score")
-        # print player name and its points
+        # print player name and its final score
         black_color_name = self.player1.name if self.player1.color == "B" else self.player2.name
         white_color_name = self.player2.name if self.player2.color == "W" else self.player1.name
         print("-" + black_color_name + "'s points: " + str(self.board.countBlack) +

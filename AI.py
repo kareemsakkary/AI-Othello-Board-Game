@@ -1,7 +1,7 @@
 from Player import Player
 import copy
-from Cell import Cell
 from Human import Human
+
 
 class AI(Player):
     def __init__(self, name, color, difficulty):
@@ -9,6 +9,13 @@ class AI(Player):
         self.difficulty = difficulty
 
     def evaluate(self, temp_board):
+        # num_black_valid_moves = len(temp_board.valid_moves(Human("dummy", 'B')))
+        # num_white_valid_moves = len(temp_board.valid_moves(Human("dummy", 'W')))
+        # if self.color == "B":
+        #     return [num_black_valid_moves, None]
+        # else:
+        #     return [num_white_valid_moves, None]
+
         if self.color == "B":
             return [temp_board.countBlack - temp_board.countWhite, None]
         else:
@@ -56,4 +63,5 @@ class AI(Player):
     def play_move(self, board):
         print("AI is thinking...")
         best_move = self.alphabeta(board, self.difficulty, float('-inf'), float('inf'), True)[1]
+        print(f"AI has made a move at cell: ({best_move.x}, {best_move.y})")
         return best_move
