@@ -12,11 +12,11 @@ class SettingsScreen:
     def __init__(self, screen):
         self.screen = screen
         self.background_color = (150, 150, 150)
-        self.background_image = pygame.image.load("assets/images/game_mode_background.jpg").convert()
+        self.background_image = pygame.image.load("GUI/assets/images/game_mode_background.jpg").convert()
         self.background_image = pygame.transform.scale(self.background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
         self.title_font = pygame.font.Font(None, 64)
         self.option_font = pygame.font.Font(None, 36)
-        self.click_sound = pygame.mixer.Sound("assets/audio/button_click.mp3")
+        self.click_sound = pygame.mixer.Sound("GUI/assets/audio/button_click.mp3")
         # Sound option
         self.sound_option = ToggleOption(screen, 100, 200, "Sound", ["On", "Off"])
         self.sound_option.current_option_index = (GUI.Constants.SOUND is not True)
@@ -25,7 +25,11 @@ class SettingsScreen:
         self.difficulty_title_text = self.title_font.render("Game Difficulty", True, BLACK)
         self.difficulty_title_rect = self.difficulty_title_text.get_rect(center=(SCREEN_WIDTH // 2, 300))
         self.difficulty_option = RadioOption(screen, 100, 400, ["Easy", "Medium", "Hard"])
-        self.difficulty_option.selected_index = GUI.Constants.DIFFICULTY - 1
+        self.difficulty_option.selected_index = 0
+        if GUI.Constants.DIFFICULTY == 3:
+            self.difficulty_option.selected_index = 1
+        if GUI.Constants.DIFFICULTY > 3:
+            self.difficulty_option.selected_index = 2
 
         self.back_button = BackToMainMenuButton(screen)
 
@@ -55,18 +59,26 @@ class SettingsScreen:
         return self.sound_option.current_option_index == 0
 
     def get_difficulty_option(self):
-        return self.difficulty_option.selected_index + 1
+        if self.difficulty_option.selected_index == 0:
+            return 1
+        elif self.difficulty_option.selected_index == 1:
+            return 3
+        else:
+            return 5
 
     def handle_events(self, events):
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
             elif event.type == pygame.MOUSEBUTTONDOWN:
 
                 if self.sound_option.is_clicked(event.pos):
                     self.sound_option.toggle()
+
                     GUI.Constants.SOUND = self.sound_enabled()
+
                 elif self.difficulty_option.is_clicked(event.pos):
                     self.difficulty_option.handle_click(event.pos)
                     GUI.Constants.DIFFICULTY = self.get_difficulty_option()
@@ -76,6 +88,7 @@ class SettingsScreen:
                         self.click_sound.play()
                     # Go back to the main menu
                     return "MainMenu"
+
 
 class ToggleOption:
     def __init__(self, screen, x, y, name, options):

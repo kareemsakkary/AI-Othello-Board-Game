@@ -11,7 +11,7 @@ from GUI.Constants import SCREEN_HEIGHT
 class MainMenuScreen:
     def __init__(self, screen):
         self.screen = screen
-        self.background_image = pygame.image.load("assets/images/background.jpeg").convert()
+        self.background_image = pygame.image.load("GUI/assets/images/background.jpeg").convert()
         self.background_image = pygame.transform.scale(self.background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
         # Load the font for the title
@@ -19,7 +19,7 @@ class MainMenuScreen:
         self.button_font = pygame.font.Font(None, 36)
 
         # Load button click sound
-        self.click_sound = pygame.mixer.Sound("assets/audio/button_click.mp3")
+        self.click_sound = pygame.mixer.Sound("GUI/assets/audio/button_click.mp3")
 
         # Define button rectangles
         self.button_width = 200
@@ -49,11 +49,11 @@ class MainMenuScreen:
 
         # Draw buttons with hover effect
         self.draw_rounded_rect(self.screen, self.get_button_color(self.play_rect), self.play_rect,
-                               20)  # Increased radius to 20
+                               20)
         self.draw_rounded_rect(self.screen, self.get_button_color(self.settings_rect), self.settings_rect,
-                               20)  # Increased radius to 20
+                               20)
         self.draw_rounded_rect(self.screen, self.get_button_color(self.exit_rect), self.exit_rect,
-                               20)  # Increased radius to 20
+                               20)
 
         self.draw_text_in_center("Play", self.play_rect, BLACK)
         self.draw_text_in_center("Settings", self.settings_rect, BLACK)

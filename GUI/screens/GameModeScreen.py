@@ -2,22 +2,24 @@ import pygame
 import sys
 
 import GUI.Constants
+from AI import AI
 from GUI.Constants import BLACK
 from GUI.Constants import WHITE
 from GUI.Constants import SCREEN_WIDTH
 from GUI.Constants import SCREEN_HEIGHT
+from Human import Human
 
 
 class GameModeScreen:
     def __init__(self, screen):
         self.screen = screen
-        self.background_image = pygame.image.load("assets/images/game_mode_background.jpg").convert()
+        self.background_image = pygame.image.load("GUI/assets/images/game_mode_background.jpg").convert()
         self.background_image = pygame.transform.scale(self.background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
         self.back_button = BackToMainMenuButton(screen)
-        self.click_sound = pygame.mixer.Sound("assets/audio/button_click.mp3")
-        self.game_start_sound = pygame.mixer.Sound("assets/audio/board_start.mp3")
-        # Load the font for the title
+        self.click_sound = pygame.mixer.Sound("GUI/assets/audio/button_click.mp3")
+        self.game_start_sound = pygame.mixer.Sound("GUI/assets/audio/board_start.mp3")
         self.title_font = pygame.font.Font(None, 64)
+        player1 = Human("Human", "B")
 
         # Create square buttons
         button_width = 150
@@ -25,9 +27,9 @@ class GameModeScreen:
         button_x = (SCREEN_WIDTH - button_width * 2) // 3
         button_y = (SCREEN_HEIGHT - button_height) // 2
         self.human_button = SquareButton(screen, button_x, button_y, button_width, button_height,
-                                         "assets/images/man.png", "Human")
+                                         "GUI/assets/images/man.png", "Human")
         self.ai_button = SquareButton(screen, button_x * 2 + button_width, button_y, button_width, button_height,
-                                      "assets/images/ai.png", "AI")
+                                      "GUI/assets/images/ai.png", "AI")
 
     def render(self):
         # Draw background image
@@ -52,16 +54,22 @@ class GameModeScreen:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 if self.human_button.is_clicked(mouse_pos):
                     if GUI.Constants.SOUND:
                         self.game_start_sound.play()
+
+                    self.player2 = Human("Human", "W")
                     GUI.Constants.GAME_MODE = 1
                     return "GameBoard"
                 elif self.ai_button.is_clicked(mouse_pos):
                     if GUI.Constants.SOUND:
                         self.game_start_sound.play()
+
+                    self.player2 = AI("AI", "W", GUI.Constants.DIFFICULTY)
+                    print("Setting player 2 to", self.player2)
                     GUI.Constants.GAME_MODE = 2
                     return "GameBoard"
                 elif self.back_button.is_clicked(mouse_pos):
@@ -92,6 +100,7 @@ class SquareButton:
     def is_clicked(self, pos):
         return self.rect.collidepoint(pos)
 
+
 class BackToMainMenuButton:
     def __init__(self, screen):
         self.screen = screen
@@ -102,7 +111,7 @@ class BackToMainMenuButton:
         self.text = "Back to Main Menu"
 
         # Load the arrow image
-        self.arrow_image = pygame.image.load("assets/images/arrow.png").convert_alpha()
+        self.arrow_image = pygame.image.load("GUI/assets/images/arrow.png").convert_alpha()
         self.arrow_image = pygame.transform.scale(self.arrow_image, (30, 30))  # Adjust size as needed
 
     def render(self):

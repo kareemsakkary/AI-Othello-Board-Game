@@ -63,5 +63,8 @@ class AI(Player):
     def play_move(self, board):
         print("AI is thinking...")
         best_move = self.alphabeta(board, self.difficulty, float('-inf'), float('inf'), True)[1]
-        print(f"AI has made a move at cell: ({best_move.x}, {best_move.y})")
+        if best_move:
+            print(f"AI has made a move at cell: ({best_move.x}, {best_move.y})")
+        else:
+            print("No moves for Ai to do")
         return best_move

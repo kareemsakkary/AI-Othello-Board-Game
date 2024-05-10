@@ -13,13 +13,5 @@ class Controller(ABC):
         pass
 
     @abstractmethod
-    def display_final_score(self):
-        pass
-
-    @abstractmethod
-    def initialize_players(self):
-        pass
-
-    @abstractmethod
     def play_game(self):
         pass
