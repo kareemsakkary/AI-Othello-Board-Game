@@ -12,17 +12,20 @@ class ConsoleController(Controller.Controller):
         if player is None:
             print("Start Playing!")
             self.board.print_board()
-        # display valid moves for current player
+            return
+        # print current player points and name
+        print()
+        print("-" + player.name + "'s turn" + " (" + player.color + ")")
+        if player.color == "W":
+            print("Current points: " + str(self.board.countWhite))
         else:
-            print()
-            print("-" + player.name + "'s turn" + " (" + player.color + ")")
-            # print current player points
-            if player.color == "W":
-                print("Current points: " + str(self.board.countWhite))
-            else:
-                print("Current points: " + str(self.board.countBlack))
-            print()
+            print("Current points: " + str(self.board.countBlack))
+        print()
+        if player.name == "AI":
+            self.board.print_board()
+        else:
             valid_moves = self.board.valid_moves(player)
+            # display valid moves for current player
             self.board.print_board(valid_moves)
 
     def display_final_score(self):
@@ -91,6 +94,7 @@ class ConsoleController(Controller.Controller):
             self.display_ui(self.player2)
             valid_moves = self.board.valid_moves(self.player2)
             self.board.make_move(self.player2, self.player2.play_move(valid_moves))
+
         # display final score
         self.display_final_score()
 
