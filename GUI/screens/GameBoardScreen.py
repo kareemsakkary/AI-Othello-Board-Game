@@ -89,12 +89,12 @@ class GameBoardScreen:
         # Draw sidebar
         self.draw_sidebar()
 
-        if self.board.game_over():
+        if self.game_over():
             message = "Game Over Black Wins" if self.board.countBlack > self.board.countWhite else "Game Over White Wins"
             self.alert_screen = AlertScreen(self.screen, message)  # Create alert screen for game over
             self.board.reset()
             self.current_player = 0
-        elif self.force_switch():
+        if self.force_switch():
             message = "Player 1 plays again" if self.current_player == 1 else "Player 2 plays again"
             self.alert_screen = AlertScreen(self.screen, message)  # Create alert screen for switching player
             self.current_player = (self.current_player + 1) % 2
@@ -159,6 +159,11 @@ class GameBoardScreen:
 
     def force_switch(self):
         return len(self.board.valid_moves(self.players[self.current_player])) == 0
+
+    def game_over(self):
+        valid1 = self.board.valid_moves(self.players[0])
+        valid2 = self.board.valid_moves(self.players[1])
+        return len(valid1) == 0 and len(valid2) == 0
 
     def handle_events(self, events):
         if self.alert_screen:  # Handle events for alert screen if exists
