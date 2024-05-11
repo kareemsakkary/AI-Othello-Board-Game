@@ -33,25 +33,38 @@ class Board:
     def can_outflank(self, player, cell):
         x = cell.x
         y = cell.y
+        cell_color = self.board[x][y].color
         # check if empty cell
-        if self.board[x][y].color != "E":
+        if self.board[x][y].color == "E":
             return False
-        for x in range(8):
-            for y in range(8):
-                if self.board[x][y].color == player.color:
-                    for k in range(4):
-                        nx = x + dx[k]
-                        ny = y + dy[k]
-                        found_opponent = False
-                        while self.valid(nx, ny) and self.board[nx][ny].color != player.color:
-                            if self.board[nx][ny].color == "E":
-                                if nx == x and ny == y and found_opponent:
-                                    return True
-                                break
-                            else:
-                                found_opponent = True
-                            nx = nx + dx[k]
-                            ny = ny + dy[k]
+        # check column if there is an opponent cell at side and empty cell at the other side
+        emp = False 
+        opp = False
+        lx = x
+        rx = x
+        while lx >= 0 and self.board[lx][y].color == cell_color:
+            lx -= 1
+        while rx < 8 and self.board[rx][y].color == cell_color:
+            rx += 1
+        emp |= self.board[lx][y].color == "E" or self.board[rx][y].color == "E"
+        opp |= self.board[lx][y].color == ("W" if cell_color == "B" else "B") or self.board[rx][y].color == ("W" if cell_color == "B" else "B")
+        if(emp and opp):
+            return True
+       
+        # check row if there is an opponent cell at side and empty cell at the other side
+        emp = False 
+        opp = False
+        ly = y
+        ry = y
+        while ly >= 0 and self.board[x][ly].color == cell_color:
+            ly -= 1
+        while ry < 8 and self.board[x][ry].color == cell_color:
+            ry += 1
+        emp |= self.board[x][ly].color == "E" or self.board[x][ry].color == "E"
+        opp |= self.board[x][ly].color == ("W" if cell_color == "B" else "B") or self.board[x][ry].color == ("W" if cell_color == "B" else "B")
+        if(emp and opp):
+            return True
+        
         return False
 
     def valid_moves(self, player):
@@ -106,15 +119,15 @@ class Board:
                 ny = ny + dy[k]
         return self.board
 
-    def undo_move(self, player, cell):
-        x = cell.x
-        y = cell.y
-        self.board[x][y].color = "E"
+    # def undo_move(self, player, cell):
+    #     x = cell.x
+    #     y = cell.y
+    #     self.board[x][y].color = "E"
 
-        if player.color == "B":
-            self.countBlack -= 1
-        else:
-            self.countWhite -= 1
+    #     if player.color == "B":
+    #         self.countBlack -= 1
+    #     else:
+    #         self.countWhite -= 1
 
     def print_board(self, valid_moves=None):
         if valid_moves is None:
@@ -154,15 +167,21 @@ class Board:
         if len(valid_black) == 0 and len(valid_white) == 0:
             return True
         return False
-
+    
+# test 
 # board = Board()
-# Player = Human.Human("kareem",'B')
-# li = board.valid_moves(Player)
+# sympols = [ [
+#     ["E", "E", "E", "E", "E", "E", "E", "E"],
+#     ["E", "E", "E", "E", "E", "E", "E", "E"],
+#     ["E", "E", "E", "B", "E", "E", "E", "E"],
+#     ["E", "E", "E", "B", "B", "E", "E", "E"],
+#     ["E", "E", "E", "B", "W", "E", "E", "E"],
+#     ["E", "E", "E", "E", "E", "E", "E", "E"],
+#     ["E", "E", "E", "E", "E", "E", "E", "E"],
+#     ["E", "E", "E", "E", "E", "E", "E", "E"]
+# ]]
+# for i in range(8):
+#     for j in range(8):
+#         board.board[i][j].color = sympols[0][i][j]
 # board.print_board()
-# board.print_board(li)
-#
-# make = board.make_move(Player,li[1])
-# li = board.valid_moves(Player)
-# board.print_board(li)
-# print(board.countBlack)
-# print(board.countWhite)
+# print(board.can_outflank(Human("dummy", "B"), Cell(3, 3, "E")))

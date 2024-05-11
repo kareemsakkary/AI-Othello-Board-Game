@@ -1,9 +1,9 @@
-import Controller
-import AI
-import Human
+from Controller import Controller
+from AI import AI
+from Human import Human
 
 
-class ConsoleController(Controller.Controller):
+class ConsoleController(Controller):
     def __init__(self):
         super().__init__()
 
@@ -88,12 +88,12 @@ class ConsoleController(Controller.Controller):
             color_choice = input(">> ")
             # Player 1 is always black and moves first
             if color_choice == "1":
-                self.player1 = Human.Human(name, 'B')
-                self.player2 = AI.AI("AI", 'W', self.choose_difficulty())
+                self.player1 = Human(name, 'B')
+                self.player2 = AI("AI", 'W', self.choose_difficulty())
                 valid_input = True
             elif color_choice == "2":
-                self.player1 = AI.AI("AI", 'B', self.choose_difficulty())
-                self.player2 = Human.Human(name, 'W')
+                self.player1 = AI("AI", 'B', self.choose_difficulty())
+                self.player2 = Human(name, 'W')
                 valid_input = True
             else:
                 print("Invalid color choice. Please choose Black or White only.")

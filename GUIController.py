@@ -1,4 +1,4 @@
-import Controller
+from Controller import Controller
 import pygame
 
 from GUI.screens.GameModeScreen import GameModeScreen
@@ -10,7 +10,7 @@ from GUI.Constants import SCREEN_WIDTH
 from GUI.Constants import SCREEN_HEIGHT
 
 
-class GUIController(Controller.Controller):
+class GUIController(Controller):
     def __init__(self):
         super().__init__()
         pygame.init()

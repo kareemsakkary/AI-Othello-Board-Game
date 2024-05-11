@@ -32,7 +32,7 @@ class AI(Player):
         for move in valid_moves:
             val += 10 if temp_board.is_border(move.x, move.y) else -10
             val += 15 if temp_board.is_corner(move.x, move.y) else -15
-            val += 20 if not temp_board.can_outflank(self, move) else -20
+            val += 20 if not temp_board.can_outflank(move) else -20
 
         return [val, None]
 
@@ -47,7 +47,7 @@ class AI(Player):
             best_score = float('-inf')
             best_move = None
             for move in temp_board.valid_moves(Human("dummy", self.color)):
-                temp = temp_board
+                temp = copy.deepcopy(temp_board)
                 temp_board.make_move(Human("dummy", self.color), move)  # update max player with this move
                 score = self.alphabeta(temp_board, depth - 1, alpha, beta, False)[0]
                 temp_board = temp  # undo move
@@ -63,7 +63,7 @@ class AI(Player):
             best_score = float('inf')
             best_move = None
             for move in temp_board.valid_moves(Human("dummy", 'W' if self.color == 'B' else 'B')):
-                temp = temp_board
+                temp = copy.deepcopy(temp_board)
                 temp_board.make_move(Human("dummy", 'W' if self.color == 'B' else 'B'), move)  # update min player with this move
                 score = self.alphabeta(temp_board, depth - 1, alpha, beta, True)[0]  # undo move
                 temp_board = temp  # undo move

@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
-import Board
+from Board import Board
 
 
 class Controller(ABC):
     def __init__(self):
-        self.board = Board.Board()
+        self.board = Board()
         self.player1 = None
         self.player2 = None
 
