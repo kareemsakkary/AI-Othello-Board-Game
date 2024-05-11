@@ -2,7 +2,7 @@ import pygame
 import sys
 
 import GUI.Constants
-from GUI.Constants import SCREEN_WIDTH, WHITE, BLACK, SCREEN_HEIGHT, SOUND, GREEN
+from GUI.Constants import SCREEN_WIDTH, WHITE, BLACK, SCREEN_HEIGHT, GREEN
 from GUI.screens.AlertScreen import AlertScreen
 from Human import Human
 from AI import AI
@@ -182,7 +182,7 @@ class GameBoardScreen:
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if self.leave_button.is_hovered:
-                    if SOUND:
+                    if GUI.Constants.SOUND:
                         self.click_sound.play()
                     return "GameMode"
 
