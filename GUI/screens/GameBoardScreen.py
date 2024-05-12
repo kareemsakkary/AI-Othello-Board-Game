@@ -89,30 +89,12 @@ class GameBoardScreen:
         # Draw sidebar
         self.draw_sidebar()
 
-        if self.game_over():
-            message = "Game Over Black Wins" if self.board.countBlack > self.board.countWhite else "Game Over White Wins"
-            self.alert_screen = AlertScreen(self.screen, message)  # Create alert screen for game over
-            self.board.reset()
-            self.current_player = 0
-        if self.force_switch():
-            message = "Player 1 plays again" if self.current_player == 1 else "Player 2 plays again"
-            self.alert_screen = AlertScreen(self.screen, message)  # Create alert screen for switching player
-            self.current_player = (self.current_player + 1) % 2
+
 
         if self.alert_screen:
             self.alert_screen.render()
 
-        if GUI.Constants.GAME_MODE == 2:
-            if self.current_player == 1:
-                move = self.players[self.current_player].play_move(self.board)
-                # Mark the spot chosen by AI with blue color
-                pygame.draw.circle(self.screen, (0, 0, 255), (move.y * self.square_size + self.square_size // 2,
-                                                              move.x * self.square_size + self.square_size // 2),
-                                   self.square_size // 2 - 5)
-                pygame.display.flip()
-                pygame.time.wait(2000)  # Add a delay of 2 seconds
-                self.board.make_move(self.players[self.current_player], move)
-                self.current_player = (self.current_player + 1) % 2
+
 
         pygame.display.flip()
 
@@ -169,8 +151,34 @@ class GameBoardScreen:
         if self.alert_screen:  # Handle events for alert screen if exists
             if self.alert_screen.handle_events(events):
                 self.alert_screen = None
+                self.render()
             else:
                 return
+
+
+        if GUI.Constants.GAME_MODE == 2:
+            if self.current_player == 1:
+                move = self.players[self.current_player].play_move(self.board)
+                if move:
+                    # Mark the spot chosen by AI with blue color
+                    pygame.draw.circle(self.screen, (0, 0, 255), (move.y * self.square_size + self.square_size // 2,
+                                                                  move.x * self.square_size + self.square_size // 2),
+                                       self.square_size // 2 - 5)
+
+                pygame.display.flip()
+                pygame.time.wait(2000)  # Add a delay of 2 seconds
+                self.board.make_move(self.players[self.current_player], move)
+                self.current_player = (self.current_player + 1) % 2
+
+        if self.game_over():
+            message = "Game Over Black Wins" if self.board.countBlack > self.board.countWhite else "Game Over White Wins"
+            self.alert_screen = AlertScreen(self.screen, message)  # Create alert screen for game over
+            self.board.reset()
+            self.current_player = 0
+        if self.force_switch():
+            message = "Player 1 plays again" if self.current_player == 1 else "Player 2 plays again"
+            self.alert_screen = AlertScreen(self.screen, message)  # Create alert screen for switching player
+            self.current_player = (self.current_player + 1) % 2
 
         for event in events:
             if event.type == pygame.QUIT:
