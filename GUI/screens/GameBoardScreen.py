@@ -46,18 +46,24 @@ class GameBoardScreen:
         self.button_height = 50
         self.click_sound = pygame.mixer.Sound("GUI/assets/audio/button_click.mp3")
         self.enemy = ""
-        self.players = [Human("Human", "B"), None]
+        self.players = [None, None]
         self.current_player = 0
         self.alert_screen = None
+        self.board.reset()
 
         if GUI.Constants.GAME_MODE == 1:
+            self.players[0] = Human("Human", "B")
             self.players[1] = Human("Enemy", "W")
             self.enemy = "GUI/assets/images/man.png"
         else:
-            self.players[1] = AI("Enemy", "W", GUI.Constants.DIFFICULTY)
-            self.enemy = "GUI/assets/images/ai.png"
+            if GUI.Constants.START_COLOR == 1:
+                self.players[0] = Human("Human", "B")
+                self.players[1] = AI("Enemy", "W", GUI.Constants.DIFFICULTY)
 
-        self.board.reset()
+            else:
+                self.players[0] = AI("Enemy", "B", GUI.Constants.DIFFICULTY)
+                self.players[1] = Human("Human", "W")
+            self.enemy = "GUI/assets/images/ai.png"
 
         # Load and resize images for sidebar
         self.sidebar_top_image = pygame.image.load("GUI/assets/images/man.png").convert_alpha()
@@ -117,6 +123,18 @@ class GameBoardScreen:
 
     def draw_sidebar(self):
         # Draw top image
+
+        black_chip_text_y = 192
+        black_chip_circle_y = 200
+
+        white_chip_text_y = 340
+        while_chip_circle_y = 350
+
+        if GUI.Constants.START_COLOR == 2:
+            black_chip_text_y, white_chip_text_y = white_chip_text_y, black_chip_text_y
+            black_chip_circle_y, while_chip_circle_y = while_chip_circle_y, black_chip_circle_y
+
+
         self.screen.blit(self.sidebar_top_image, (SCREEN_WIDTH - self.sidebar_width, 0))
 
         # Draw bottom image
@@ -124,20 +142,20 @@ class GameBoardScreen:
                          (SCREEN_WIDTH - self.sidebar_width, SCREEN_HEIGHT - self.sidebar_width))
 
         # Draw black chip
-        pygame.draw.circle(self.screen, BLACK, (SCREEN_WIDTH - self.sidebar_width + 20, 200), 20)
+        pygame.draw.circle(self.screen, BLACK, (SCREEN_WIDTH - self.sidebar_width + 20, black_chip_circle_y), 20)
 
         # Draw black chip count
         black_chip_text = self.leave_button.font.render(str(self.board.countBlack), True, BLACK)
-        black_chip_rect = black_chip_text.get_rect(topright=(SCREEN_WIDTH - self.sidebar_width + 80, 192))
+        black_chip_rect = black_chip_text.get_rect(topright=(SCREEN_WIDTH - self.sidebar_width + 80, black_chip_text_y))
         self.screen.blit(black_chip_text, black_chip_rect)
 
         # Draw WHITE chip
-        pygame.draw.circle(self.screen, WHITE, (SCREEN_WIDTH - self.sidebar_width + 20, 350), 20)
+        pygame.draw.circle(self.screen, WHITE, (SCREEN_WIDTH - self.sidebar_width + 20, while_chip_circle_y), 20)
 
         # Draw WHITE chip count
-        black_chip_text = self.leave_button.font.render(str(self.board.countWhite), True, WHITE)
-        black_chip_rect = black_chip_text.get_rect(topright=(SCREEN_WIDTH - self.sidebar_width + 80, 340))
-        self.screen.blit(black_chip_text, black_chip_rect)
+        white_chip_text = self.leave_button.font.render(str(self.board.countWhite), True, WHITE)
+        white_chip_rect = white_chip_text.get_rect(topright=(SCREEN_WIDTH - self.sidebar_width + 80, white_chip_text_y))
+        self.screen.blit(white_chip_text, white_chip_rect)
 
     def force_switch(self):
         return len(self.board.valid_moves(self.players[self.current_player])) == 0
@@ -156,8 +174,21 @@ class GameBoardScreen:
                 return
 
 
+        if self.game_over():
+            message = "Game Over Black Wins" if self.board.countBlack > self.board.countWhite else "Game Over White Wins"
+            self.alert_screen = AlertScreen(self.screen, message)  # Create alert screen for game over
+            self.board.reset()
+            self.current_player = 0
+            return
+
+        if self.force_switch():
+            message = "Player 1 plays again" if self.current_player == 1 else "Player 2 plays again"
+            self.alert_screen = AlertScreen(self.screen, message)  # Create alert screen for switching player
+            self.current_player = (self.current_player + 1) % 2
+            return
+
         if GUI.Constants.GAME_MODE == 2:
-            if self.current_player == 1:
+            if self.current_player != GUI.Constants.START_COLOR - 1:
                 move = self.players[self.current_player].play_move(self.board)
                 if move:
                     # Mark the spot chosen by AI with blue color
@@ -165,20 +196,12 @@ class GameBoardScreen:
                                                                   move.x * self.square_size + self.square_size // 2),
                                        self.square_size // 2 - 5)
 
-                pygame.display.flip()
-                pygame.time.wait(2000)  # Add a delay of 2 seconds
-                self.board.make_move(self.players[self.current_player], move)
+                    pygame.display.flip()
+                    pygame.time.wait(2000)  # Add a delay of 2 seconds
+                    self.board.make_move(self.players[self.current_player], move)
                 self.current_player = (self.current_player + 1) % 2
 
-        if self.game_over():
-            message = "Game Over Black Wins" if self.board.countBlack > self.board.countWhite else "Game Over White Wins"
-            self.alert_screen = AlertScreen(self.screen, message)  # Create alert screen for game over
-            self.board.reset()
-            self.current_player = 0
-        if self.force_switch():
-            message = "Player 1 plays again" if self.current_player == 1 else "Player 2 plays again"
-            self.alert_screen = AlertScreen(self.screen, message)  # Create alert screen for switching player
-            self.current_player = (self.current_player + 1) % 2
+
 
         for event in events:
             if event.type == pygame.QUIT:

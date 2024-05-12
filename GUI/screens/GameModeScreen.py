@@ -69,7 +69,6 @@ class GameModeScreen:
                         self.game_start_sound.play()
 
                     self.player2 = AI("AI", "W", GUI.Constants.DIFFICULTY)
-                    print("Setting player 2 to", self.player2)
                     GUI.Constants.GAME_MODE = 2
                     return "GameBoard"
                 elif self.back_button.is_clicked(mouse_pos):

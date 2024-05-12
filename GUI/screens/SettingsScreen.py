@@ -23,13 +23,21 @@ class SettingsScreen:
 
         # Difficulty option
         self.difficulty_title_text = self.title_font.render("Game Difficulty", True, BLACK)
-        self.difficulty_title_rect = self.difficulty_title_text.get_rect(center=(SCREEN_WIDTH // 2, 300))
+        self.difficulty_title_rect = self.difficulty_title_text.get_rect(center=(SCREEN_WIDTH // 4, 300))
         self.difficulty_option = RadioOption(screen, 100, 400, ["Easy", "Medium", "Hard"])
         self.difficulty_option.selected_index = 0
+
+        self.play_with_color_text = self.title_font.render("Player Color", True, BLACK)
+        self.play_with_color_rect = self.play_with_color_text.get_rect(center=(SCREEN_WIDTH // 2 + 200, 300))
+        self.play_color_option = RadioOption(screen, 480, 400, ["Black", "White"])
+        self.play_color_option.selected_index = GUI.Constants.START_COLOR - 1
+
+
         if GUI.Constants.DIFFICULTY == 3:
             self.difficulty_option.selected_index = 1
         if GUI.Constants.DIFFICULTY > 3:
             self.difficulty_option.selected_index = 2
+
 
         self.back_button = BackToMainMenuButton(screen)
 
@@ -50,6 +58,12 @@ class SettingsScreen:
         # Difficulty option
         self.difficulty_option.render()
 
+        #Color Title
+        self.screen.blit(self.play_with_color_text, self.play_with_color_rect)
+
+        #Color Option
+        self.play_color_option.render()
+
         # Back button
         self.back_button.render()
 
@@ -65,6 +79,9 @@ class SettingsScreen:
             return 3
         else:
             return 5
+
+    def get_color_option(self):
+        return self.play_color_option.selected_index + 1
 
     def handle_events(self, events):
         for event in events:
@@ -82,6 +99,10 @@ class SettingsScreen:
                 elif self.difficulty_option.is_clicked(event.pos):
                     self.difficulty_option.handle_click(event.pos)
                     GUI.Constants.DIFFICULTY = self.get_difficulty_option()
+
+                elif self.play_color_option.is_clicked(event.pos):
+                    self.play_color_option.handle_click(event.pos)
+                    GUI.Constants.START_COLOR = self.get_color_option()
 
                 elif self.back_button.is_clicked(event.pos):
                     if GUI.Constants.SOUND:
