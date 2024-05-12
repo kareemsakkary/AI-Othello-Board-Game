@@ -4,24 +4,24 @@ from GUIController import GUIController
 
 def main():
     print("Welcome to Othello Board game!")
-    controller = ConsoleController()
+    # controller = ConsoleController()
 
-    # print("Choose your preferred interface for the game:")
-    # print("1. Console")
-    # print("2. GUI")
-    # valid_input = False
-    # controller = None
-    #
-    # while not valid_input:
-    #     preferred_choice = input(">> ")
-    #     if preferred_choice == "1":
-    #         controller = ConsoleController()
-    #         valid_input = True
-    #     elif preferred_choice == "2":
-    #         controller = GUIController()
-    #         valid_input = True
-    #     else:
-    #         print("Invalid UI choice. Please choose 1 or 2 only.")
+    print("Choose your preferred interface for the game:")
+    print("1. Console")
+    print("2. GUI")
+    valid_input = False
+    controller = None
+    
+    while not valid_input:
+        preferred_choice = input(">> ")
+        if preferred_choice == "1":
+            controller = ConsoleController()
+            valid_input = True
+        elif preferred_choice == "2":
+            controller = GUIController()
+            valid_input = True
+        else:
+            print("Invalid UI choice. Please choose 1 or 2 only.")
 
     controller.play_game()
 
