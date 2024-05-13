@@ -8,7 +8,7 @@ class Human(Player):
 
     def play_move(self, board):
         valid_moves = board.valid_moves(self)
-        if(len(valid_moves) == 0):
+        if len(valid_moves) == 0:
             print("No valid moves available. Passing the turn.")
             return None
         print("Enter your move: ")

@@ -118,6 +118,7 @@ class Board:
                             nx = nx + dx[k]
                             ny = ny + dy[k]
         return c
+
     def make_move(self, player, cell):
         x = cell.x
         y = cell.y
@@ -148,8 +149,6 @@ class Board:
         else:
             self.countWhite += 1
         return self.board
-
-
 
     def print_board(self, valid_moves=None):
         if valid_moves is None:
@@ -189,29 +188,3 @@ class Board:
         if len(valid_black) == 0 and len(valid_white) == 0:
             return True
         return False
-    
-# test 
-# board = Board()
-# sympols = [ [
-#     ["E", "E", "E", "B", "E", "E", "E", "E"],
-#     ["E", "E", "E", "W", "E", "E", "E", "E"],
-#     ["E", "E", "E", "W", "E", "E", "E", "E"],
-#     ["B", "W", "W", "E", "E", "E", "E", "E"],
-#     ["E", "E", "E", "E", "E", "E", "E", "E"],
-#     ["E", "E", "E", "E", "E", "E", "E", "E"],
-#     ["E", "E", "E", "E", "E", "E", "E", "E"],
-#     ["E", "E", "E", "E", "E", "E", "E", "E"]
-# ]]
-# for i in range(8):
-#     for j in range(8):
-#         board.board[i][j].color = sympols[0][i][j]
-# board.countBlack = 2
-# board.countWhite = 4
-# board.print_board()
-# print("Black : ",board.countBlack)
-# print("White : ",board.countWhite)
-# board.make_move(Human("dummy", "B"), Cell(3, 3, "B"))
-# board.print_board()
-# print("Black : ",board.countBlack)
-# print("White : ",board.countWhite)
-# print(board.count_can_outflank(Human("dummy", "B")))

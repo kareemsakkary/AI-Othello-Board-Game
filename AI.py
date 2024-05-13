@@ -9,11 +9,11 @@ class AI(Player):
         self.difficulty = difficulty
 
     def evaluate(self, temp_board):
-        # 5 points player's color cells greater than the opponent color cells else -5
+        # 5 points if player's color cells greater than the opponent color cells else -5
         # 10 points if number of valid moves greater than opponent else -10
         # 10 points if a cell with my color at the edge/border of the board else -10
         # 15 points if a cell with my color at the corner of the board else -15
-        # 20 points cells can't be outflanked by the opponent greater than cells can't be outflanked by the player else -20
+        # 20 points if cells can't be outflanked by the opponent greater than cells can't be outflanked by the player else -20
 
         valid_moves = temp_board.valid_moves(self)
         opponent_valid_moves = temp_board.valid_moves(Human("dummy", 'W' if self.color == 'B' else 'B'))
@@ -112,5 +112,5 @@ class AI(Player):
         if best_move:
             print(f"AI has made a move at cell: ({best_move.x}, {best_move.y})")
         else:
-            print("No moves for Ai to do")
+            print("No moves for AI to do")
         return best_move

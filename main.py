@@ -4,8 +4,6 @@ from GUIController import GUIController
 
 def main():
     print("Welcome to Othello Board game!")
-    # controller = ConsoleController()
-
     print("Choose your preferred interface for the game:")
     print("1. Console")
     print("2. GUI")
