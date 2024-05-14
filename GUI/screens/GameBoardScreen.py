@@ -161,9 +161,7 @@ class GameBoardScreen:
         return len(self.board.valid_moves(self.players[self.current_player])) == 0
 
     def game_over(self):
-        valid1 = self.board.valid_moves(self.players[0])
-        valid2 = self.board.valid_moves(self.players[1])
-        return len(valid1) == 0 and len(valid2) == 0
+        return self.board.game_over()
 
     def handle_events(self, events):
         if self.alert_screen:  # Handle events for alert screen if exists

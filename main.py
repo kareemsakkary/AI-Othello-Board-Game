@@ -20,7 +20,6 @@ def main():
             valid_input = True
         else:
             print("Invalid UI choice. Please choose 1 or 2 only.")
-
     controller.play_game()
 
 

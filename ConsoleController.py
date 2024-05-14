@@ -54,9 +54,7 @@ class ConsoleController(Controller):
 
     def check_moves_left(self):
         # check if there are any valid moves left for both players
-        if len(self.board.valid_moves(self.player1)) == 0 and len(self.board.valid_moves(self.player2)) == 0:
-            return False
-        return True
+        return self.board.game_over()
 
     def choose_mode(self):
         valid_input = False
@@ -138,11 +136,13 @@ class ConsoleController(Controller):
             move = self.player1.play_move(self.board)
             if move:
                 self.board.make_move(self.player1, move)
+                self.player1.coins = 32 - self.board.countBlack
             # player 2 turn
             self.display_ui(self.player2)
 
             move = self.player2.play_move(self.board)
             if move:
                 self.board.make_move(self.player2, move)
+                self.player2.coins = 32 - self.board.countWhite
         # display final score
         self.display_final_score()
