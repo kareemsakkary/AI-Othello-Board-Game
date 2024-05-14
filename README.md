@@ -28,9 +28,9 @@
 - The game ends if a player runs out of all of their disks or if both of the players can't make any valid moves on the board.
 
 ## Game preview
-<img src="https://github.com/kareemsakkary/AI-Othello-Board-Game/assets/96924895/8e0b4ec3-d283-4392-9523-e5c2741cd760" alt="image" height="500" width="500">
-<img src="https://github.com/kareemsakkary/AI-Othello-Board-Game/assets/96924895/143cb6e0-cb62-48bf-b909-09895f8ba705" alt="image" height="500" width="500">
-<img src="https://github.com/kareemsakkary/AI-Othello-Board-Game/assets/96924895/834a558c-54e7-454d-8daa-675246f60461" alt="image" height="500" width="500">
-<img src="https://github.com/kareemsakkary/AI-Othello-Board-Game/assets/96924895/566c4dfc-6604-4d89-b849-eafc40206547" alt="image" height="500" width="500">
+<img src="https://github.com/kareemsakkary/AI-Othello-Board-Game/assets/96924895/8e0b4ec3-d283-4392-9523-e5c2741cd760" alt="image" height="500" width="400">
+<img src="https://github.com/kareemsakkary/AI-Othello-Board-Game/assets/96924895/143cb6e0-cb62-48bf-b909-09895f8ba705" alt="image" height="500" width="400">
+<img src="https://github.com/kareemsakkary/AI-Othello-Board-Game/assets/96924895/834a558c-54e7-454d-8daa-675246f60461" alt="image" height="500" width="400">
+<img src="https://github.com/kareemsakkary/AI-Othello-Board-Game/assets/96924895/566c4dfc-6604-4d89-b849-eafc40206547" alt="image" height="500" width="400">
 
 
