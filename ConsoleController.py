@@ -136,13 +136,13 @@ class ConsoleController(Controller):
             move = self.player1.play_move(self.board)
             if move:
                 self.board.make_move(self.player1, move)
-                self.player1.coins = 32 - self.board.countBlack
+                self.player1.coins -= 1
             # player 2 turn
             self.display_ui(self.player2)
 
             move = self.player2.play_move(self.board)
             if move:
                 self.board.make_move(self.player2, move)
-                self.player2.coins = 32 - self.board.countWhite
+                self.player2.coins -= 1
         # display final score
         self.display_final_score()
